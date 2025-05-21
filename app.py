@@ -109,6 +109,51 @@ plt.tight_layout()
 st.pyplot(fig)
 
 st.divider()
+
+
+# 1. Mapa de calor de costos de antenas activadas
+st.subheader("💸 Mapa de Calor de Costos de Antenas Activadas")
+
+# Crear vector de costos para todas las antenas (np.nan si está apagada)
+total_antenas = 500
+costos_todas_flat = np.full(total_antenas, np.nan)
+for idx, costo in zip(resultados["indices_antenas"], resultados["costos_seleccionados"]):
+    costos_todas_flat[idx - 1] = costo  # -1 porque los índices empiezan en 1
+
+costos_todas = costos_todas_flat.reshape(filas, columnas)
+
+fig, ax = plt.subplots(figsize=(12, 6))
+cmap_heat = plt.cm.YlGn
+im = ax.imshow(costos_todas, cmap=cmap_heat)
+
+# Mostrar el costo solo si la antena está activada
+for i in range(filas):
+    for j in range(columnas):
+        if not np.isnan(costos_todas[i, j]):
+            ax.text(j, i, f"{int(costos_todas[i, j])}", ha="center", va="center", fontsize=7, color="black")
+
+ax.set_xticks([])
+ax.set_yticks([])
+ax.set_title("Mapa de Calor: Costo de Antenas Activadas")
+plt.colorbar(im, ax=ax, label="Costo")
+plt.tight_layout()
+st.pyplot(fig)
+
+# 2. Estadísticas de costos de antenas activadas
+st.subheader("📊 Estadísticas de Costos de Antenas Activadas")
+costos_activadas = np.array(resultados["costos_seleccionados"])
+if costos_activadas.size > 0:
+    st.markdown(
+        f"- **Costo mínimo:** ${costos_activadas.min():,.0f}\n"
+        f"- **Costo máximo:** ${costos_activadas.max():,.0f}\n"
+        f"- **Costo promedio:** ${costos_activadas.mean():,.2f}\n"
+        f"- **Costo mediano:** ${np.median(costos_activadas):,.2f}"
+    )
+else:
+    st.write("No hay antenas activadas.")
+    
+    
+st.divider()
 # ----------------------------
 # Descarga de Resultados
 # ----------------------------
