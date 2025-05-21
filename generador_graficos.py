@@ -45,6 +45,7 @@ plt.xlabel("Antena activada (índice en la solución)")
 plt.ylabel("Clientes cubiertos")
 plt.title("Clientes cubiertos por cada antena activada\n(Antena 95 resaltada en rojo)")
 plt.tight_layout()
+plt.savefig("clientes_por_antena.png", dpi=300)  # <-- Guarda el gráfico
 plt.show()
 
 # Antenas que cubren a cada cliente
@@ -61,5 +62,9 @@ plt.tight_layout()
 for i in range(len(n)):
     plt.text((bins[i] + bins[i+1]) / 2, n[i], int(n[i]), ha='center', va='bottom')
 
+plt.savefig("histograma_costos_antenas.png", dpi=300)  # <-- Guarda el gráfico
 plt.show()
 
+
+# 7. Guardar DataFrame resumen
+df_antenas.to_csv("antenas_unificadas.csv", index=False)
