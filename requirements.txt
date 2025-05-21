@@ -1,0 +1,5 @@
+streamlit
+pandas
+Pillow>=8.0.0
+matplotlib>=3.0.0
+numpy
