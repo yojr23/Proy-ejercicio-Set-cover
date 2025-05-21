@@ -27,10 +27,19 @@ with st.expander("📂 Mostrar JSON crudo"):
 # Métricas principales del modelo
 # ----------------------------
 st.header("📊 Resumen General")
+st.markdown("""
+Estas son las **métricas clave** que resumen el desempeño de la solución encontrada. 
+El objetivo principal es maximizar la cobertura de clientes mientras se minimiza 
+el costo total de implementación.
+""")
+
 col1, col2, col3 = st.columns(3)
-col1.metric("✅ Clientes cubiertos", f"{resultados['clientes_cubiertos']} / 500")
-col2.metric("📡 Antenas activadas", resultados["antenas_activadas"])
-col3.metric("💰 Costo total", f"${resultados['costo_total']:,}")
+col1.metric("✅ Clientes cubiertos", f"{resultados['clientes_cubiertos']} / 500", 
+           help="Porcentaje de clientes cubiertos por al menos una antena")
+col2.metric("📡 Antenas activadas", resultados["antenas_activadas"],
+           help="Número total de antenas necesarias para la cobertura")
+col3.metric("💰 Costo total", f"${resultados['costo_total']:,}",
+           help="Suma de los costos de todas las antenas activadas")
 
 st.divider()
 
